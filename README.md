@@ -2,7 +2,7 @@ INTRODUCTION::
 HELLO ,everyone this is SWETA REDHU AND  welcome to my first GITHUB PROJECT that I made about the  MOST TYPICAL concern; women safety...
 
 📌 OVERVIEW:
-Many safety apps depend on the user manually pressing a button or opening an app, which is often impossible in a real emergency. [Project Name] uses Invisible AI: lightweight, ambient intelligence that runs quietly in the background, detects signs of danger automatically, and triggers an alert without requiring any action from the user.
+Many safety apps depend on the user manually pressing a button or opening an app, which is often impossible in a real emergency. [WOMEN-SAFETY] uses Invisible AI: lightweight, ambient intelligence that runs quietly in the background, detects signs of danger automatically, and triggers an alert without requiring any action from the user.
 
 ❗ PROBLEM STATEMENT:
 Women often cannot unlock a phone or press an SOS button while in danger.
