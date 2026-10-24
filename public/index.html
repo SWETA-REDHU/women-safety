@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>SafeHer — One-tap SOS</title>
+  <meta name="description" content="One-tap SOS: share your live location with trusted contacts, call emergency helplines, and use a loud alarm or fake call." />
+  <meta name="theme-color" content="#14090d" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="brand" href="/"><span class="dot"></span>SafeHer</a>
+    <span class="status" id="netStatus">Ready</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Hold for help</p>
+      <h1>You are not alone.</h1>
+      <p class="lede">Press and hold the button for 2 seconds. Your live location is captured and an SOS message is prepared for your trusted contacts.</p>
+
+      <div class="sos-wrap">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <button id="sosBtn" class="sos" aria-describedby="sosHint">
+          <svg class="progress" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" /></svg>
+          <span class="sos-label">SOS</span>
+          <span class="sos-sub" id="sosHint">Hold 2s</span>
+        </button>
+      </div>
+
+      <div id="sosPanel" class="panel sos-panel" hidden>
+        <div class="panel-head">
+          <h2>SOS active</h2>
+          <button class="ghost small" id="cancelSos">Stop</button>
+        </div>
+        <p id="locText" class="loc">Getting your location…</p>
+        <textarea id="sosMessage" rows="4" aria-label="SOS message"></textarea>
+        <div class="share-grid">
+          <button class="btn primary" id="shareNative">Share…</button>
+          <a class="btn" id="shareSms" href="#">Text contacts</a>
+          <a class="btn" id="shareWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn danger" href="tel:112">Call 112</a>
+        </div>
+        <label class="check"><input type="checkbox" id="liveTrack" checked /> Keep updating location while SOS is active</label>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-title">Emergency helplines <span>India</span></h2>
+      <div class="lines">
+        <a class="line hot" href="tel:112"><b>112</b><span>National emergency</span></a>
+        <a class="line" href="tel:1091"><b>1091</b><span>Women helpline (Police)</span></a>
+        <a class="line" href="tel:181"><b>181</b><span>Women helpline (Domestic abuse)</span></a>
+        <a class="line" href="tel:100"><b>100</b><span>Police</span></a>
+        <a class="line" href="tel:108"><b>108</b><span>Ambulance</span></a>
+        <a class="line" href="tel:1930"><b>1930</b><span>Cyber crime</span></a>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-title">Quick tools</h2>
+      <div class="tools">
+        <button class="tool" id="sirenBtn" aria-pressed="false">
+          <span class="ic">📢</span><b>Siren</b><small>Loud alarm + flashing screen</small>
+        </button>
+        <button class="tool" id="fakeCallBtn">
+          <span class="ic">📞</span><b>Fake call</b><small>Incoming call in 10s</small>
+        </button>
+        <button class="tool" id="shareLocBtn">
+          <span class="ic">📍</span><b>Share location</b><small>Send where you are, no alarm</small>
+        </button>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="panel-head">
+        <h2 class="section-title">Trusted contacts</h2>
+        <span class="muted small-text">Saved only on this device</span>
+      </div>
+      <ul id="contactList" class="contacts"></ul>
+      <form id="contactForm" class="contact-form" autocomplete="off">
+        <input name="name" placeholder="Name" required maxlength="40" />
+        <input name="phone" placeholder="Phone (+91…)" required inputmode="tel" pattern="[+0-9 ()-]{6,20}" />
+        <button class="btn primary" type="submit">Add</button>
+      </form>
+      <label class="msg-label" for="customMsg">Your SOS message</label>
+      <textarea id="customMsg" rows="2" maxlength="200"></textarea>
+    </section>
+
+    <section class="block tips">
+      <h2 class="section-title">Stay-safe checklist</h2>
+      <ol>
+        <li>Add at least two trusted contacts above and test sharing once.</li>
+        <li>Add this page to your home screen for one-tap access.</li>
+        <li>Share your live trip details when using cabs or travelling late.</li>
+        <li>Trust your instincts — move toward lit, crowded places if you feel followed.</li>
+        <li>Keep your phone charged; carry a power bank on long trips.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>In immediate danger, always call <a href="tel:112">112</a>. SafeHer does not send messages automatically — it prepares them for you to send.</p>
+  </footer>
+
+  <div id="flash" class="flash" hidden></div>
+
+  <div id="fakeCall" class="fake-call" hidden>
+    <div class="caller">
+      <div class="avatar">M</div>
+      <h3>Mom</h3>
+      <p class="muted" id="callState">Incoming call…</p>
+    </div>
+    <div class="call-actions">
+      <button class="round decline" id="declineCall" aria-label="Decline">✕</button>
+      <button class="round accept" id="acceptCall" aria-label="Accept">✆</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
